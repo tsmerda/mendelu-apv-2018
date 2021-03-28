@@ -1,0 +1,45 @@
+{extends 'layout.latte'}
+
+{block title}Upravit hlavní údaje o osobě{/block}
+{block body}
+    <div class="container">
+        <h2 class="page-header">{include title}</h2>
+        <hr class="pb-4">
+        <form action="{link editPerson}?id={$id}" method="post">
+            <label>Jméno</label>
+            <input type="text" name="fn" value="{$form['fn']}"
+                   class="form-control">
+            <br>
+            <label>Příjmení</label>
+            <input type="text" name="ln" value="{$form['ln']}"
+                   class="form-control">
+            <br>
+            <label>Přezdívka</label>
+            <input type="text" name="nn" value="{$form['nn']}"
+                   class="form-control">
+            <br>
+            <label>Výška</label>
+            <input type="number" name="h" value="{$form['h']}" class="form-control">
+            <br>
+            <label>Pohlaví</label>
+            <select name="g" class="form-control">
+                <option value="">Neznámé</option>
+                <option value="male" {if $form['g'] == 'male'}selected{/if}>Muž</option>
+                <option value="female" {if $form['g'] == 'female'}selected{/if}>Žena</option>
+            </select>
+            <br>
+            <label>Datum narození</label>
+            <input type="date" name="bd" value="{$form['bd']}" class="form-control">
+            <br>
+            <hr class="pt-1 pb-1">
+            <div class="row">
+                <a href="{link personInfo}?id={$id}"
+                   class="btn btn-secondary bg-dark ml-3 mr-2">Zpět</a>
+                <button type="submit" class="btn btn-secondary bg-dark">
+                    <span class="fa fa-save"></span>
+                    Upravit
+                </button>
+            </div>
+        </form>
+    </div>
+{/block}

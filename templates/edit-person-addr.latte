@@ -1,0 +1,38 @@
+{extends 'layout.latte'}
+
+{block title}Upravit adresní údaje o osobě{/block}
+{block body}
+    <div class="container">
+        <h2 class="page-header">{include title}</h2>
+        <hr class="pb-4">
+        <form action="{link editPersonAddr}?id={$id}" method="post">
+            <label>Město</label>
+            <input type="text" name="c" value="{$form['c']}" class="form-control">
+            <br>
+            <label>Ulice</label>
+            <input type="text" name="sna" value="{$form['sna']}" class="form-control">
+            <br>
+            <label>Číslo ulice</label>
+            <input type="number" name="snu" value="{$form['snu']}" class="form-control">
+            <br>
+            <label>PSČ</label>
+            <input type="text" name="z" value="{$form['z']}" class="form-control">
+            <br>
+            <label>Země</label>
+            <input type="text" name="co" value="{$form['co']}" class="form-control">
+            <br>
+            <label>Název</label>
+            <input type="text" name="n" value="{$form['n']}" class="form-control">
+            <br>
+            <hr class="pt-1 pb-1">
+            <div class="row">
+                <a href="{link personInfo}?id={$id}"
+                   class="btn btn-secondary bg-dark ml-3 mr-2">Zpět</a>
+                <button type="submit" class="btn btn-secondary bg-dark">
+                    <span class="fa fa-save"></span>
+                    Upravit
+                </button>
+            </div>
+        </form>
+    </div>
+{/block}

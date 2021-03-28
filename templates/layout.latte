@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <title>{include title}</title>
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/custom.css">
+    <script type="text/javascript" src="{$basePath}/js/jquery.js"></script>
+    <script type="text/javascript" src="{$basePath}/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {ifset meta}{include meta}{/ifset}
+</head>
+<body>
+<!-- menu -->
+{if !empty($_SESSION['user'])}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+        <div class="container">
+            <a class="navbar-brand" style="font-size: x-large" href="{link persons}">OSOBY</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{link persons}">
+                            Výpis osob
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{link newWithAddress}">
+                            Nová osoba
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{link meetings}">
+                            Seznam schůzek
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{link logout}">
+                            Odhlásit {$_SESSION['user']['login']}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{/if}
+
+<!-- chyba -->
+{if !empty($error)}
+    <div class="container">
+        <p class="alert alert-danger">
+            {$error}
+        </p>
+    </div>
+{/if}
+
+<!-- obsah -->
+{include body}
+</body>
+</html>

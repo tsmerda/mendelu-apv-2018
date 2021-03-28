@@ -1,0 +1,80 @@
+{extends 'layout.latte'}
+{block title}kontaktní údaje o osobě{/block}
+{block body}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="page-header">Smazat kontakt</h2>
+                <hr class="pb-4">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Název</th>
+                        <th>Kontakt</th>
+                        <th class="text-right">Smazat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $contact as $c}
+                        <tr>
+                            <td>{$c['name']}</td>
+                            <td>{$c['contact']}</td>
+                            {if !empty($c['name'])}
+                                <td class="text-right">
+                                    <form method="post"
+                                          onsubmit="return confirm('Opravdu smazat?')"
+                                          action="{link deleteContact}?id={$c['id_contact']}&idp={$id}">
+                                        <button class="btn btn-danger">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            {/if}
+                        </tr>
+
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-6">
+                <h2 class="page-header">Přidat nový kontakt</h2>
+                <hr class="pb-4">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Název</th>
+                        <th>Kontakt</th>
+                        <th class="text-right">Přidat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <form action="{link newContact}?id={$id}" method="post">
+                        <tr>
+                            <td>
+                                <select name="idct" class="form-control">
+                                    {foreach $contact_type as $ct}
+                                        <option value="{$ct['id_contact_type']}">{$ct['name']}</option>
+                                    {/foreach}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="c" value="" class="form-control">
+                            </td>
+                            <td class="text-right">
+                                <button type="submit" class="btn btn-secondary bg-dark">
+                                    <span class="fa fa-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr class="pt-1 pb-1">
+        <a href="{link personInfo}?id={$id}"
+           class="btn btn-secondary bg-dark">Zpět</a>
+    </div>
+{/block}

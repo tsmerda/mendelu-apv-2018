@@ -1,0 +1,43 @@
+{extends 'layout.latte'}
+
+{block title}Přihlášení{/block}
+
+{block body}
+    <div class="container" id="login-page">
+        <div class="row">
+            <div class="col-lg-4 mx-auto">
+
+                <div class="card bg-light">
+                    <div class="card-title bg-dark mt-2">
+                        <h1 class="text-center text-white">{include title}</h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="{link login}" method="post">
+                            <div class="input-group pb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-user"></span>
+                                    </div>
+                                </div>
+                                <input type="text" name="login" class="form-control" placeholder="Login">
+                            </div>
+
+                            <div class="input-group pb-1">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span class="fa fa-lock"></span>
+                                    </div>
+                                </div>
+                                <input type="password" name="pass" class="form-control" placeholder="Heslo">
+                            </div>
+                            <button type="submit" class="btn btn-secondary bg-dark p-2">
+                                Přihlásit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wallpaper-overlay"></div>
+{/block}

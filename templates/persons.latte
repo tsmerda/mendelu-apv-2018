@@ -1,0 +1,71 @@
+{extends 'layout.latte'}
+
+{block title}Výpis osob{/block}
+
+{block body}
+    <div class="container">
+
+        <h1 class="page-header">{include title}</h1>
+        <hr class="pb-5">
+
+        <form action="{link persons}" method="get" class="pb-3">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <input type="text" name="q" class="form-control">
+                </div>
+                <div class="col-12 col-md-6">
+                    <button type="submit" class="btn btn-secondary bg-dark btn-block">
+                        <span class="fa fa-search"></span>
+                        Hledat
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-striped mb-5">
+            <tr>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Přezdívka</th>
+                <th>Adresa</th>
+                <th>Počet schůzek</th>
+                <th>Počet kontaktů</th>
+                <th>Smazat</th>
+                <th>Podrobnosti</th>
+            </tr>
+
+            {foreach $people as $p}
+                <tr>
+                    <td>{$p['first_name']}</td>
+                    <td>{$p['last_name']}</td>
+                    <td>{$p['nickname']}</td>
+                    <td>
+                        {if $p['id_location']}
+                            {$p['street_name']}
+                            {$p['street_number']}
+                            {$p['city']}
+                        {/if}
+                    </td>
+                    <td>{$p['pocet_s']}</td>
+                    <td>{$p['pocet_k']}</td>
+                    <td class="text-center">
+                        <form method="post"
+                              onsubmit="return confirm('Opravdu smazat?')"
+                              action="{link deletePerson}?id={$p['id_person']}">
+                            <button class="btn btn-danger">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </form>
+                    </td>
+                    <td class="text-center">
+                        <a href="{link personInfo}?id={$p['id_person']}"
+                           class="btn btn-secondary bg-dark">
+                            <span class="fa fa-info"></span>
+                        </a>
+                    </td>
+                </tr>
+            {/foreach}
+        </table>
+    </div>
+
+{/block}

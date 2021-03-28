@@ -1,0 +1,73 @@
+{extends 'layout.latte'}
+
+{block title}Přidat novou osobu{/block}
+
+{block body}
+    <div class="container">
+        <h1 class="page-header">{include title}</h1>
+        <hr class="pb-5">
+        <form action="{link newWithAddress}" method="post">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label>Jméno</label>
+                    <input type="text" name="fn" value="{$form['fn']}" class="form-control">
+                    <br>
+                    <label>Příjmení</label>
+                    <input type="text" name="ln" value="{$form['ln']}" class="form-control">
+                    <br>
+                    <label>Přezdívka</label>
+                    <input type="text" name="nn" value="{$form['nn']}" class="form-control">
+                    <br>
+                    <label>Výška</label>
+                    <input type="number" name="h" value="{$form['h']}" class="form-control">
+                    <br>
+                    <label>Pohlaví</label>
+                    <select name="g" class="form-control">
+                        <option value="">Neznámé</option>
+                        <option value="male" {if $form['g'] == 'male'}selected{/if}>Muž</option>
+                        <option value="female" {if $form['g'] == 'female'}selected{/if}>Žena</option>
+                    </select>
+                    <br>
+                    <label>Datum narození</label>
+                    <input type="date" name="bd" value="{$form['bd']}" class="form-control">
+                    <br>
+                </div>
+                <div class="col-lg-6">
+                    <label>Město</label>
+                    <input type="text" class="form-control" name="ci" value="{$form['ci']}">
+                    <br>
+                    <label>Ulice</label>
+                    <input type="text" class="form-control" name="st" value="{$form['st']}">
+                    <br>
+                    <label>Číslo domu</label>
+                    <input type="number" class="form-control" name="sn" value="{$form['sn']}">
+                    <br>
+                    <label>PSČ</label>
+                    <input type="text" class="form-control" name="zip" value="{$form['zip']}">
+                    <br>
+                    <hr>
+                    <label>Existující adresa</label>
+                    <select name="idl" class="form-control">
+                        <option value="">Nová adresa</option>
+                        {foreach $locations as $l}
+                            {if $l['id_location'] == $form['idl']}
+                                <option value="{$l['id_location']}" selected>
+                                    {else}
+                                <option value="{$l['id_location']}">
+                            {/if}
+                        {$l['city']}
+                        {$l['street_name']}
+                        {$l['street_number']}
+                            </option>
+                        {/foreach}
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-secondary bg-dark">
+                <span class="fa fa-save"></span>
+                Uložit osobu
+            </button>
+        </form>
+    </div>
+{/block}

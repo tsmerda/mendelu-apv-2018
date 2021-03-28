@@ -1,0 +1,143 @@
+{extends 'layout.latte'}
+{block title}Schůzky{/block}
+{block body}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Současné schůzky</h2>
+                <hr class="pb-2">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Začátek</th>
+                        <th>Trvání</th>
+                        <th>Popis</th>
+                        <th>Místo</th>
+                        <th class="text-right">Zrušit schůzku</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $meeting as $m}
+                        <tr>
+                            <td>{$m['start']}</td>
+                            <td>{$m['duration']}</td>
+                            <td>{$m['description']}</td>
+                            <td>{$m['city']} {$m['street_name']} {$m['street_number']}</td>
+                            {if !empty($m['start'])}
+                                <td class="text-right">
+                                    <form method="post"
+                                          onsubmit="return confirm('Opravdu chcete zrušit schůzku?')"
+                                          action="{link deletePersonMeeting}?id={$m['id_meeting']}&idp={$id}">
+                                        <button class="btn btn-danger">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            {/if}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12 pt-5">
+                <h2>Vytvořit novou schůzku</h2>
+                <hr class="pb-2">
+            </div>
+            <div class="col-lg-12">
+                <form action="{link newMeeting}?id={$id}" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Začátek</label>
+                            <input type="date" name="s" value="" class="form-control">
+                            <br>
+                            <label>Trvání</label>
+                            <input type="time" name="dur" value="" class="form-control">
+                            <br>
+                            <label>Popis</label>
+                            <input type="text" name="desc" value="" class="form-control">
+                            <br>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Město</label>
+                            <input type="text" class="form-control"
+                                   name="ci" value="">
+                            <br>
+                            <label>Ulice</label>
+                            <input type="text" class="form-control"
+                                   name="st" value="">
+                            <br>
+                            <label>Číslo domu</label>
+                            <input type="number" class="form-control"
+                                   name="sn" value="">
+                            <br>
+                            <label>PSČ</label>
+                            <input type="text" class="form-control"
+                                   name="zip" value="">
+                            <br>
+                            <hr>
+                            <label>Existující adresa</label>
+                            <select name="idl" class="form-control">
+                                <option value="" selected>Nové místo</option>
+                                {foreach $location as $l}
+                                    <option value="{$l['id_location']}">
+                                        {$l['city']}
+                                        {$l['street_name']}
+                                        {$l['street_number']}
+                                    </option>
+                                {/foreach}
+                            </select>
+                            <br>
+                        </div>
+                    </div>
+                    <hr class="pt-1 pb-1">
+                    <div class="row">
+                        <button type="submit" class="btn btn-secondary bg-dark ml-3 mr-2 mb-5">
+                            <span class="fa fa-plus"></span>
+                            Přidat schůzku
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-12 pt-5">
+                <h2>Přidat osobu ke schůzce</h2>
+                <hr class="pb-2">
+            </div>
+            <div class="col-lg-12">
+                <form action="{link addMeeting}?id={$id}" method="post">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <label>Vyberte schůzku</label>
+                            <select name="idm" class="form-control">
+                                <option value="" selected> -</option>
+                                {foreach $allmeeting as $am}
+                                    <option value="{$am['id_meeting']}">
+                                        {$am['start']}
+                                        {$am['duration']}
+                                        {$am['description']}
+                                        {if !empty($am['city'])}
+                                        ---
+                                        {/if}
+                                        {$am['city']}
+                                        {$am['street_name']}
+                                        {$am['street_number']}
+                                    </option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="col-lg-3 mt-auto" style="text-align:center">
+                            <button type="submit" class="btn btn-secondary bg-dark">
+                                <span class="fa fa-plus"></span>
+                                Přidat se
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="pb-1 mt-5">
+                    <a href="{link personInfo}?id={$id}"
+                       class="btn btn-secondary bg-dark mr-2 mb-5">Zpět</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{/block}

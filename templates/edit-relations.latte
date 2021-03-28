@@ -1,0 +1,99 @@
+{extends 'layout.latte'}
+{block title}Vztahy{/block}
+{block body}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="page-header">Současné vztahy</h2>
+                <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Název</th>
+                        <th>S osobou</th>
+                        <th>Popis</th>
+                        <th class="text-right">Smazat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $relation as $r}
+                        <tr>
+                            <td>{$r['name']}</td>
+                            <td>
+                                <a href="{link personInfo}?id={$r['id_person2']}">
+                                    {$r['id_person2']}
+                                    <!--{$r['first_name']} {$r['last_name']}  NEFUNGUJE -->
+                                </a>
+                            </td>
+                            <td>{$r['description']}</td>
+                            {if !empty($r['name'])}
+                                <td class="text-right">
+                                    <form method="post"
+                                          onsubmit="return confirm('Opravdu chcete smazat tento vztah?')"
+                                          action="{link deleteRelation}?id={$r['id_relation']}&idp={$id}">
+                                        <button class="btn btn-danger">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            {/if}
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-6">
+                <h2 class="page-header">Přidat nový vztah</h2>
+                <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Název</th>
+                        <th>S osobou</th>
+                        <th>Popis</th>
+                        <th class="text-right">Přidat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <form action="{link newRelation}?id={$id}" method="post">
+                        <tr>
+                            <td>
+                                <select name="idrt" class="form-control">
+                                    <option value="">Neznámé</option>
+                                    {foreach $relation_type as $rt}
+                                        <option value="{$rt['id_relation_type']}">
+                                            {$rt['name']}
+                                        </option>
+                                    {/foreach}
+                                </select>
+                            </td>
+                            <td>
+                                <select name="id2" class="form-control">
+                                    {foreach $person2 as $p2}
+                                        {if $p2['id_person'] != $id}
+                                            <option value="{$p2['id_person']}">{$p2['first_name']} {$p2['last_name']}</option>
+                                        {/if}
+                                    {/foreach}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="d" value="" class="form-control">
+                            </td>
+                            <td class="text-right">
+                                <button type="submit" class="btn btn-secondary bg-dark">
+                                    <span class="fa fa-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr class="pt-1 pb-1">
+        <a href="{link personInfo}?id={$id}"
+           class="btn btn-secondary bg-dark mb-5">Zpět</a>
+    </div>
+{/block}
